@@ -3,6 +3,7 @@ firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
     if (isLog == 1) {
       document.location.href = "/profile.html";
+     // showProfile();
     }
       
     var user = firebase.auth().currentUser;
@@ -22,6 +23,10 @@ function login(){
     var errorMessage = error.message;
     window.alert("Error: " + errorMessage);
   });
+  var user = {
+    email: userEmail,
+  };
+  SendProfile(user);
 }
 
 /*function include(url) {
@@ -72,3 +77,37 @@ function SendData(user)
     }
   });
 }
+
+function SendProfile(user)
+{
+  $.ajax({
+    url: "/api/Profile",
+    type: "POST",
+    data: JSON.stringify(user),
+    contentType: "application/json",
+    complete: 	function(data) {
+      console.log(data.request); //в консоле браузера выводим json в параметре request                                    //т.е. то что нам отправил сервер в ответ
+                                //мы можем вывести какой-то параметр полученного json, например name1   
+    }
+  });
+  showProfile(user);  
+}
+
+function showProfile(userJson){
+  var newData = JSON.stringify(userJson)
+  var userObj = JSON.parse(newData);
+  window.alert(userObj.email);
+  //document.location.href = "/profile.html";
+  //console.log("UserObj " + userObj);
+  var header = '<p>My name is ' + userObj.email + '<p>';
+  // var list = '';
+
+  // for (var i in userObj.items) {
+  // list += '<li>' + i + ': ' + userObj.items[i] + ' шт. </li>';
+  // }
+  // var x = document.getElementById("profile").innerHTML;
+  // document.getElementById("profile").innerHTML = header;
+  document.getElementById("email").innerHTML = header;
+  //document.getElementById('div').innerHTML += '<ul>' + list + '</ul>';
+}
+

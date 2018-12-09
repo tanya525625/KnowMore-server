@@ -41,10 +41,21 @@ server.post('/api/user',
         var user = req.body;
         insertUser(user);
         res.sendStatus(200);
-        res.end();
+        res.end(JSON.stringify(user));
         next();
     });
 
+
+server.post('/api/Profile',
+    function(req, res, next){
+    console.log(req.body);
+    var user = req.body;
+    //res.json();
+    res.sendStatus(200);
+    res.end(JSON.stringify(user));
+    next();
+});
+    
 server.get('/main.css', function(req, res, next){ 
     res.writeHead(200, {"Content-Type":"text/css"});
     file = fs.createReadStream('main.css');
@@ -119,6 +130,5 @@ String.prototype.replaceAll = function(search, replacement) {
         
     });
     })
-    
 }
   
