@@ -36,6 +36,7 @@ function SendQuest()
         }
     });
 }
- function directQuest(){
+ 
+function directQuest(){
     document.location.href = "/questions.html";
  }

@@ -15,3 +15,7 @@ function ShowQuestions(questions){
     window.alert("We are here!!!");
     window.alert(questions[1].question);
 }
+
+function directProfile(){
+    document.location.href = "/profile.html";
+}

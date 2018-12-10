@@ -25,21 +25,42 @@ String.prototype.replaceAll = function(search, replacement) {
   return target.split(search).join(replacement);
 };
 
+con.connect(function (err) {
+  if (err )
+      throw err;
+  
+})
+
 function giveAllQuestions(){
-  con.connect(function (err) {
-      if (err )
-          throw err
-      con.query('use KnowMoreDB;', function (err, result, fields){ 
-      if(err) 
-          throw err;
+  con.query('use KnowMoreDB;', function (err, result, fields){
+    if(err)
+        throw err;
   });
+
   var sql  = 'SELECT * FROM question';
+  
   con.query(sql, function (err, result) {
     console.log(err);
     console.log(result);
+
   } );
-  })
+
+
 }
 
-res = giveAllQuestions();
+giveAllQuestions();
+// con.connect(function (err) {
+//   if (err )
+//       throw err
+//   con.query('use KnowMoreDB;', function (err, result, fields){
+//   if(err)
+//       throw err;
+// });
+var sql  = 'SELECT * FROM user';
+con.query(sql, function (err, result) {
+console.log(err);
+console.log(result);
+//con.end();
+// } );
+})
 //console.log(res);

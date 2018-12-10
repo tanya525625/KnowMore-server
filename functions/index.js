@@ -2,6 +2,18 @@
 const functions = require('firebase-functions');
 var db = require('./db');
 var fs = require('fs');
+var mysql = require('mysql');
+
+var con = mysql.createConnection({
+  host: '35.185.170.102',
+  user: 'root',
+  password: 'root'
+});
+
+con.connect(function (err) {
+    if (err )
+        throw err;
+})
 
 const express = require('express');
 const server = express();
@@ -68,13 +80,10 @@ server.post('/api/Profile',
 });
 
 server.get('/questionsList', (req, res)=>{
-    con.connect(function (err) {
-        if (err )
-            throw err
-        con.query('use KnowMoreDB;', function (err, result, fields){ 
-        if(err) 
+    con.query('use KnowMoreDB;', function (err, result, fields){
+        if(err)
             throw err;
-    });
+      });    
     var sql  = 'SELECT * FROM question';
     con.query(sql, function (err, result) {
         if (err){
@@ -84,7 +93,7 @@ server.get('/questionsList', (req, res)=>{
             res.json(result);
         }
     });
-    });
+    // });
 });
 
 server.get('/main.css', function(req, res, next){ 
@@ -130,13 +139,6 @@ String.prototype.replaceAll = function(search, replacement) {
 
 exports.server = functions.https.onRequest(server);
 
-var mysql = require('mysql');
-
-var con = mysql.createConnection({
-  host: '35.185.170.102',
-  user: 'root',
-  password: 'root'
-});
 
 String.prototype.replaceAll = function(search, replacement) {
   var target = this;
@@ -144,12 +146,12 @@ String.prototype.replaceAll = function(search, replacement) {
 };
 
  function insertUser(user) {
-    con.connect(function (err) {
-        if (err )
-            throw err
-        con.query('use KnowMoreDB;', function (err, result, fields){ 
-        if(err) 
-            throw err;
+    // con.connect(function (err) {
+    //     if (err )
+    //         throw err
+    con.query('use KnowMoreDB;', function (err, result, fields){ 
+    if(err) 
+        throw err;
     });
     var values = Object.values(user);
     var sql  =`INSERT INTO user (${Object.keys(user).join(',')})` + 
@@ -159,46 +161,31 @@ String.prototype.replaceAll = function(search, replacement) {
 
     con.query(sql, function (err, result) {
         console.log(err);
-        
+        con.end();
     });
-    })
+    // })
 }
 
 function insertQuest(quest){
-    con.connect(function (err) {
-        if (err )
-            throw err
-        con.query('use KnowMoreDB;', function (err, result, fields){ 
-        if(err) 
-            throw err;
+    // con.connect(function (err) {
+    //     if (err )
+    //         throw err
+    con.query('use KnowMoreDB;', function (err, result, fields){ 
+    if(err) 
+        throw err;
     });
     var sql  =`INSERT INTO question (${Object.keys(quest).join(',')})` + 'VALUES (' + ' \' ' +
                 quest.question +  ' \' '+ ',' +
                 quest.pos_count + ',' + quest.neg_count + ','+ quest.isModerated +',' + quest.sphere_interest_area_quest_id +')' ;
-    console.log(sql);
+    //console.log(sql);
 
     con.query(sql, function (err, result) {
         console.log(err);
-        
     });
-    })
+    // })
 }
   
-function giveAllQuestions(){
-    con.connect(function (err) {
-        if (err )
-            throw err
-        con.query('use KnowMoreDB;', function (err, result, fields){ 
-        if(err) 
-            throw err;
-    });
-    var sql  = 'SELECT * FROM question';
-    con.query(sql, function (err, result) {
-      console.log(err);
-      console.log(result);
-    } );
-    })
-  }
+
 
 // server.listen(3000, function () {
 //     console.log('Example app listening on port 3000!');

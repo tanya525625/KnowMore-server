@@ -89,3 +89,8 @@ body{
 	font-family: 'El Messiri', sans-serif;
 	color: #010808; 
 }
+
+.form-group{
+	width: 100%;
+	padding: 2%;
+}
