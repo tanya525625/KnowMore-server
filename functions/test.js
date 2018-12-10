@@ -59,7 +59,8 @@ giveAllQuestions();
 var sql  = 'SELECT * FROM user';
 con.query(sql, function (err, result) {
 console.log(err);
-console.log(result);
+//console.log(result);
+console.log(result.length);
 //con.end();
 // } );
 })

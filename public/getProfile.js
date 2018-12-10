@@ -1,5 +1,5 @@
 $(document).ready ( function (){
-    window.alert("getting");
+    //window.alert("getting");
 
     //while (obj == null)
     //{

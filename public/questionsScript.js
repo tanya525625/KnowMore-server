@@ -12,8 +12,12 @@ $(document).ready ( function (){
 });
 
 function ShowQuestions(questions){
-    window.alert("We are here!!!");
-    window.alert(questions[1].question);
+    //window.alert("We are here!!!");
+    //window.alert(questions[1].question);
+    for (var i=0; i<questions.length; i++) {
+        var list = '<p>'+ questions[i].question + '</p>';
+        document.getElementById('questionField').innerHTML += list;
+    }
 }
 
 function directProfile(){
