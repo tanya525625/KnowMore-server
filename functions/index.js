@@ -45,24 +45,36 @@ server.post('/api/user',
         next();
     });
 
+server.post('/api/quest',
+function(req, res, next){
+    console.log(req.body);
+    var quest = req.body;
+    insertQuest(quest);
+    res.sendStatus(200);
+    //res.end(JSON.stringify(user));
+    next();
+});
 
 server.post('/api/Profile',
     function(req, res, next){
     console.log(req.body);
     var user = req.body;
-    //res.json();
-    res.sendStatus(200);
-    res.end(JSON.stringify(user));
+    //res.json(user);
+    
+    //res.sendStatus(200);
+    res.send(JSON.stringify(user));
+    
     next();
 });
-    
+
 server.get('/main.css', function(req, res, next){ 
     res.writeHead(200, {"Content-Type":"text/css"});
     file = fs.createReadStream('main.css');
     file.pipe(res);
     return next();
 }); 
-server.get('/mainClient.js', function(req, res, next){ 
+
+server.get('/getProfile.js', function(req, res, next){ 
     res.writeHead(200, {"Content-Type":"text/js"});
     file = fs.createReadStream('main.Client.js');
     file.pipe(res);
@@ -131,4 +143,28 @@ String.prototype.replaceAll = function(search, replacement) {
     });
     })
 }
+
+function insertQuest(quest){
+    con.connect(function (err) {
+        if (err )
+            throw err
+        con.query('use KnowMoreDB;', function (err, result, fields){ 
+        if(err) 
+            throw err;
+    });
+    var values = Object.values(quest);
+    var sql  =`INSERT INTO question (${Object.keys(quest).join(',')})` + 'VALUES (' + ' \' ' +
+                quest.question +  ' \' '+ ',' +
+                quest.pos_count + ',' + quest.neg_count + ','+ quest.isModerated +',' + quest.sphere_interest_area_quest_id +')' ;
+    console.log(sql);
+
+    con.query(sql, function (err, result) {
+        console.log(err);
+        
+    });
+    })
+}
   
+// server.listen(3000, function () {
+//     console.log('Example app listening on port 3000!');
+//   });

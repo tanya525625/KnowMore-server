@@ -1,4 +1,4 @@
-var isLog = 0;
+var isLog;1
 firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
     if (isLog == 1) {
@@ -90,16 +90,20 @@ function SendProfile(user)
                                 //мы можем вывести какой-то параметр полученного json, например name1   
     }
   });
-  showProfile(user);  
+  
+  //getting();
+  //showProfile(user);  
 }
 
+
 function showProfile(userJson){
+
   var newData = JSON.stringify(userJson)
   var userObj = JSON.parse(newData);
-  window.alert(userObj.email);
+  //window.alert(userObj.email);
   //document.location.href = "/profile.html";
   //console.log("UserObj " + userObj);
-  var header = '<p>My name is ' + userObj.email + '<p>';
+  //var header = '<p>My name is ' + userObj.email + '<p>';
   // var list = '';
 
   // for (var i in userObj.items) {
@@ -107,7 +111,7 @@ function showProfile(userJson){
   // }
   // var x = document.getElementById("profile").innerHTML;
   // document.getElementById("profile").innerHTML = header;
-  document.getElementById("email").innerHTML = header;
+  //document.getElementById("email").innerHTML = header;
   //document.getElementById('div').innerHTML += '<ul>' + list + '</ul>';
 }
 
