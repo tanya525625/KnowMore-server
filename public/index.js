@@ -1,7 +1,9 @@
-var isLog;1
+//firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION); //Пользовтаель будет считаться разлогиненным 
+var isLog = firebase.auth().currentUser; //При закрытии всех вкладок
+
 firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
-    if (isLog == 1) {
+    if (isLog != null ) {
       document.location.href = "/profile.html";
      // showProfile();
     }
@@ -15,20 +17,24 @@ firebase.auth().onAuthStateChanged(function(user) {
 });
 
 function login(){
-  isLog = 1;
-  var userEmail = document.getElementById("email_field").value.toString();
-  var userPass = document.getElementById("passw_field").value.toString();
-  firebase.auth().signInWithEmailAndPassword(userEmail, userPass).catch(function(error) {
-    // Handle Errors here.
-    var errorMessage = error.message;
-    window.alert("Error: " + errorMessage);
-  });
-  var user = {
-    email: userEmail,
-  };
-  SendProfile(user);
+  isLog = firebase.auth().currentUser;
+  if (isLog==null)
+  {
+    isLog = 1;
+    var userEmail = document.getElementById("email_field").value.toString();
+    var userPass = document.getElementById("passw_field").value.toString();
+    firebase.auth().signInWithEmailAndPassword(userEmail, userPass).catch(function(error) {
+      // Handle Errors here.
+      var errorMessage = error.message;
+      window.alert("Error: " + errorMessage);
+    });
+  }
+  else
+  {
+    window.alert("Allready logged in!" );
+    document.location.href = "/profile.html";
+  }
 }
-
 /*function include(url) {
   var script = document.createElement('script');
   script.src = url;

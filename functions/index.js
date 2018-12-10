@@ -1,6 +1,5 @@
 
 const functions = require('firebase-functions');
-var db = require('./db');
 var fs = require('fs');
 var mysql = require('mysql');
 
