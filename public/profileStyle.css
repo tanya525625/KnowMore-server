@@ -16,7 +16,7 @@ body{
 }
 
 .btn-light:first-of-type{
-    width: 50%;
+    width: 23%;
     margin-left: 25%;
     margin-top: 0%; 
 	font-size: 1.4em; 
@@ -25,16 +25,29 @@ body{
 	color: #1a535c;
 }
 
+.btn-light-new{
+    margin-left: 3%;
+    width: 23%;
+    font-family: "Franklin Gothic Demi", sans-serif;
+	color: #1a535c;
+    font-size: 1.4em; 
+    background-color:#f8f8ff;
+}
+.btn-light-new:hover{
+    background-color: #cccccc;
+}
+
 .btn-warning{
-	margin-left: 12%;
+	margin-left: 15%;
     margin-top: 0%; 
 	font-size: 1.4em; 
-	float: left;
-	color: #1a535c;
+    color: #1a535c;
 	font-family: "Franklin Gothic Demi", sans-serif;
 }
 
+
 .btn-light, 
+.btn-light-new
 .btn-warning{
 	display: inline-block;
 }

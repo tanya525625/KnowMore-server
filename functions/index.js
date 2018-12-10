@@ -67,6 +67,26 @@ server.post('/api/Profile',
     next();
 });
 
+server.get('/questionsList', (req, res)=>{
+    con.connect(function (err) {
+        if (err )
+            throw err
+        con.query('use KnowMoreDB;', function (err, result, fields){ 
+        if(err) 
+            throw err;
+    });
+    var sql  = 'SELECT * FROM question';
+    con.query(sql, function (err, result) {
+        if (err){
+            console.log(err);
+        } else{
+            console.log(result);
+            res.json(result);
+        }
+    });
+    });
+});
+
 server.get('/main.css', function(req, res, next){ 
     res.writeHead(200, {"Content-Type":"text/css"});
     file = fs.createReadStream('main.css');
@@ -76,7 +96,7 @@ server.get('/main.css', function(req, res, next){
 
 server.get('/getProfile.js', function(req, res, next){ 
     res.writeHead(200, {"Content-Type":"text/js"});
-    file = fs.createReadStream('main.Client.js');
+    file = fs.createReadStream('getProfile.js');
     file.pipe(res);
     return next();
 }); 
@@ -132,7 +152,7 @@ String.prototype.replaceAll = function(search, replacement) {
             throw err;
     });
     var values = Object.values(user);
-      var sql  =`INSERT INTO user (${Object.keys(user).join(',')})` + 
+    var sql  =`INSERT INTO user (${Object.keys(user).join(',')})` + 
                 `VALUES (\'${values.slice(0, values.length - 1).join('\',\'')}\',` +
                 user.points + ')' ;
     console.log(sql);
@@ -152,7 +172,6 @@ function insertQuest(quest){
         if(err) 
             throw err;
     });
-    var values = Object.values(quest);
     var sql  =`INSERT INTO question (${Object.keys(quest).join(',')})` + 'VALUES (' + ' \' ' +
                 quest.question +  ' \' '+ ',' +
                 quest.pos_count + ',' + quest.neg_count + ','+ quest.isModerated +',' + quest.sphere_interest_area_quest_id +')' ;
@@ -165,6 +184,22 @@ function insertQuest(quest){
     })
 }
   
+function giveAllQuestions(){
+    con.connect(function (err) {
+        if (err )
+            throw err
+        con.query('use KnowMoreDB;', function (err, result, fields){ 
+        if(err) 
+            throw err;
+    });
+    var sql  = 'SELECT * FROM question';
+    con.query(sql, function (err, result) {
+      console.log(err);
+      console.log(result);
+    } );
+    })
+  }
+
 // server.listen(3000, function () {
 //     console.log('Example app listening on port 3000!');
 //   });
