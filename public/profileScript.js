@@ -1,13 +1,18 @@
 $(document).ready ( function (){
-    //window.alert("getting");
-
-    //while (obj == null)
-    //{
-        $.get("/api/Profile", function(obj){
-        var userObj = JSON.parse(obj);
-        window.alert(userObj.email);
-        })
-    //} 
+    var cookieEmail = getCookie ('LoginCookie');
+    var email = {
+        email: cookieEmail,
+      };
+    $.ajax({
+        url: "/api/email",
+        type: "POST",
+        data: JSON.stringify(email),
+        contentType: "application/json",
+        success: function(data){
+          data = JSON.parse(data);
+          showProfile(data);
+      }
+      });
 });
 
 function SendQuest()
@@ -37,6 +42,18 @@ function SendQuest()
     });
 }
  
+function showProfile(profile){
+    var newName = profile[0].name;
+    var newSurname = profile[0].surname;
+    var newNickname = profile[0].nickname;
+    var newPoints = parseInt(profile[0].points);
+    document.getElementById('surname').innerHTML = newSurname;
+    document.getElementById('nick').innerHTML = newNickname;
+    document.getElementById('score').innerHTML = newPoints;
+    document.getElementById('name').innerHTML = newName;
+}
+  
 function directQuest(){
     document.location.href = "/questions.html";
  }
+

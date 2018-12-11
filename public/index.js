@@ -1,5 +1,6 @@
 //firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION); //Пользовтаель будет считаться разлогиненным 
 var isLog = firebase.auth().currentUser; //При закрытии всех вкладок
+document.emailId = null;
 
 firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
@@ -16,6 +17,7 @@ firebase.auth().onAuthStateChanged(function(user) {
   } 
 });
 
+
 function login(){
   isLog = firebase.auth().currentUser;
   if (isLog==null)
@@ -23,10 +25,20 @@ function login(){
     isLog = 1;
     var userEmail = document.getElementById("email_field").value.toString();
     var userPass = document.getElementById("passw_field").value.toString();
+    document.emailId = userEmail;
+    // var email = {
+    //   email: userEmail,
+    // };
+    
+    setCookie('LoginCookie', userEmail, {path: '/', exrises: 100}); 
+    //sendLogInfO(email);
     firebase.auth().signInWithEmailAndPassword(userEmail, userPass).catch(function(error) {
-      // Handle Errors here.
-      var errorMessage = error.message;
-      window.alert("Error: " + errorMessage);
+      if(error)
+      {
+        var errorMessage = error.message;
+        window.alert("Error: " + errorMessage);
+      } 
+      //sendLogInfO(email);
     });
   }
   else
@@ -35,11 +47,13 @@ function login(){
     document.location.href = "/profile.html";
   }
 }
-/*function include(url) {
-  var script = document.createElement('script');
-  script.src = url;
-  document.getElementsByTagName('head')[0].appendChild(script);
-}*/
+
+document.emailId = "Zubakhina";
+
+// function test(){
+//   return emailId;
+//   //window.alert(emailId);
+// }
 
 function logout(){
   isLog = 0;
@@ -54,6 +68,7 @@ function signup(){
   var userSurname = document.getElementById("surname_field_sign").value.toString();
   var userName = document.getElementById("name_field_sign").value.toString();
   var points = 250;
+  setCookie('LoginCookie', userEmail, {path: '/', exrises: 100}); 
   firebase.auth().createUserWithEmailAndPassword(userEmail, userPass).catch(function(error) {
   });
   var user = {
@@ -84,40 +99,91 @@ function SendData(user)
   });
 }
 
-function SendProfile(user)
-{
-  $.ajax({
-    url: "/api/Profile",
-    type: "POST",
-    data: JSON.stringify(user),
-    contentType: "application/json",
-    complete: 	function(data) {
-      console.log(data.request); //в консоле браузера выводим json в параметре request                                    //т.е. то что нам отправил сервер в ответ
-                                //мы можем вывести какой-то параметр полученного json, например name1   
-    }
-  });
+// function sendLogInfO(email)
+// {
+//   $.ajax({
+//     url: "/api/email",
+//     type: "POST",
+//     data: JSON.stringify(email),
+//     contentType: "application/json",
+//     success: function(data){
+//       //console.log(data);
+//       window.alert("success");
+//       window.alert(data);
+//       data = JSON.parse(data);
+//       window.alert(data[0].name);
+//   }
+//   });
+// }
+
+
+
+// function SendProfile(user)
+// {
+//   $.ajax({
+//     url: "/api/Profile",
+//     type: "POST",
+//     data: JSON.stringify(user),
+//     contentType: "application/json",
+//     complete: 	function(data) {
+//       console.log(data.request); //в консоле браузера выводим json в параметре request                                    //т.е. то что нам отправил сервер в ответ
+//                                 //мы можем вывести какой-то параметр полученного json, например name1   
+//     }
+//   });
   
-  //getting();
-  //showProfile(user);  
+//   //getting();
+//   //showProfile(user);  
+// }
+
+
+// function getProfile(email){
+//   $.ajax({
+//     url: "/api/profile",
+//     type: "POST",
+//     data: JSON.stringify(email),
+//     contentType: "application/json",
+//     success: function(data){
+//       console.log(data);
+//       profile = data;
+//       showProfile(profile);
+//     }
+//   });
+// }
+
+
+// возвращает cookie с именем name, если есть, если нет, то undefined
+function getCookie(name) {
+  var matches = document.cookie.match(new RegExp(
+    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+  ));
+  return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
+function setCookie(name, value, options) {
+  options = options || {};
 
-function showProfile(userJson){
+  var expires = options.expires;
 
-  var newData = JSON.stringify(userJson)
-  var userObj = JSON.parse(newData);
-  //window.alert(userObj.email);
-  //document.location.href = "/profile.html";
-  //console.log("UserObj " + userObj);
-  //var header = '<p>My name is ' + userObj.email + '<p>';
-  // var list = '';
+  if (typeof expires == "number" && expires) {
+    var d = new Date();
+    d.setTime(d.getTime() + expires * 1000);
+    expires = options.expires = d;
+  }
+  if (expires && expires.toUTCString) {
+    options.expires = expires.toUTCString();
+  }
 
-  // for (var i in userObj.items) {
-  // list += '<li>' + i + ': ' + userObj.items[i] + ' шт. </li>';
-  // }
-  // var x = document.getElementById("profile").innerHTML;
-  // document.getElementById("profile").innerHTML = header;
-  //document.getElementById("email").innerHTML = header;
-  //document.getElementById('div').innerHTML += '<ul>' + list + '</ul>';
+  value = encodeURIComponent(value);
+
+  var updatedCookie = name + "=" + value;
+
+  for (var propName in options) {
+    updatedCookie += "; " + propName;
+    var propValue = options[propName];
+    if (propValue !== true) {
+      updatedCookie += "=" + propValue;
+    }
+  }
+
+  document.cookie = updatedCookie;
 }
-

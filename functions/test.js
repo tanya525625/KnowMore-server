@@ -31,37 +31,11 @@ con.connect(function (err) {
   
 })
 
-function giveAllQuestions(){
-  con.query('use KnowMoreDB;', function (err, result, fields){
-    if(err)
-        throw err;
-  });
-
-  var sql  = 'SELECT * FROM question';
-  
-  con.query(sql, function (err, result) {
-    console.log(err);
-    console.log(result);
-
-  } );
+var email = {
+  email: "tanya@mail.ru",
+};
 
 
-}
-
-giveAllQuestions();
-// con.connect(function (err) {
-//   if (err )
-//       throw err
-//   con.query('use KnowMoreDB;', function (err, result, fields){
-//   if(err)
-//       throw err;
-// });
-var sql  = 'SELECT * FROM user';
-con.query(sql, function (err, result) {
-console.log(err);
-//console.log(result);
-console.log(result.length);
-//con.end();
-// } );
-})
-//console.log(res);
+var newEmail = JSON.stringify(email);
+newEmail = JSON.parse(newEmail);
+console.log(newEmail.email);

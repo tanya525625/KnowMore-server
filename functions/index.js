@@ -56,6 +56,34 @@ server.post('/api/user',
         next();
     });
 
+server.post('/api/email',
+function(req, res, next){
+    console.log(req.body);
+    var email = req.body;
+
+    //var profile = JSON.parse(email);
+    con.query('use KnowMoreDB;', function (err, result, fields){
+        if(err)
+            throw err;
+    });    
+    var sql  = 'SELECT name, nickname, surname, points FROM user where user.email = "' + email.email + '";';
+    console.log(sql);
+    con.query(sql, function (err, result) {
+        if (err){
+            console.log(err);
+        } else{
+            console.log(result);
+            res.end(JSON.stringify(result));
+            //res.send(result);
+            //res.json(result);
+        }
+    });
+
+    //res.sendStatus(200);
+    //res.end(JSON.stringify(email));
+    //next();
+});
+
 server.post('/api/quest',
 function(req, res, next){
     console.log(req.body);
@@ -66,23 +94,12 @@ function(req, res, next){
     next();
 });
 
-server.post('/api/Profile',
-    function(req, res, next){
-    console.log(req.body);
-    var user = req.body;
-    //res.json(user);
-    
-    //res.sendStatus(200);
-    res.send(JSON.stringify(user));
-    
-    next();
-});
 
 server.get('/questionsList', (req, res)=>{
     con.query('use KnowMoreDB;', function (err, result, fields){
         if(err)
             throw err;
-      });    
+    });    
     var sql  = 'SELECT * FROM question';
     con.query(sql, function (err, result) {
         if (err){
@@ -92,7 +109,6 @@ server.get('/questionsList', (req, res)=>{
             res.json(result);
         }
     });
-    // });
 });
 
 server.get('/main.css', function(req, res, next){ 
@@ -109,7 +125,14 @@ server.get('/questionsStyle.css', function(req, res, next){
     return next();
 }); 
 
-server.get('/getProfile.js', function(req, res, next){ 
+server.get('/profileStyle.css', function(req, res, next){ 
+    res.writeHead(200, {"Content-Type":"text/css"});
+    file = fs.createReadStream('profileStyle.css');
+    file.pipe(res);
+    return next();
+}); 
+
+server.get('/profileScript.js', function(req, res, next){ 
     res.writeHead(200, {"Content-Type":"text/js"});
     file = fs.createReadStream('getProfile.js');
     file.pipe(res);
@@ -152,9 +175,6 @@ String.prototype.replaceAll = function(search, replacement) {
 };
 
  function insertUser(user) {
-    // con.connect(function (err) {
-    //     if (err )
-    //         throw err
     con.query('use KnowMoreDB;', function (err, result, fields){ 
     if(err) 
         throw err;
@@ -167,9 +187,7 @@ String.prototype.replaceAll = function(search, replacement) {
 
     con.query(sql, function (err, result) {
         console.log(err);
-        con.end();
     });
-    // })
 }
 
 function insertQuest(quest){

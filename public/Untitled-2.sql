@@ -1,3 +1,3 @@
 use KnowMoreDB;
 
-SELECT * FROM question;
+SELECT name FROM user where user.email = "tanya@mail.ru";
