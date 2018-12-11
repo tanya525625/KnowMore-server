@@ -1,0 +1,69 @@
+@import url('https://fonts.googleapis.com/css?family=El+Messiri');
+@import url('https://fonts.googleapis.com/css?family=El+Messiri');
+
+html {
+	overflow-y: scroll;
+}
+
+body{
+	margin-left:auto;
+	margin-right:auto;
+	position: relative;
+	line-height: 1.6;
+    overflow-x: hidden;
+	padding: 2%;
+	display: 'block';
+    background-image: url(img/profile.jpg);
+}
+
+.btn-light:first-of-type{
+    width: 50%;
+    margin-left: 25%;
+    margin-top: 0%; 
+	font-size: 1.4em; 
+	float: left;
+	font-family: "Franklin Gothic Demi", sans-serif;
+	color: #1a535c;
+}
+    
+.btn-warning{
+	margin-left: 12%;
+    margin-top: 0%; 
+	font-size: 1.4em; 
+	float: left;
+	color: #1a535c;
+	font-family: "Franklin Gothic Demi", sans-serif;
+}
+
+.btn-light, 
+.btn-warning{
+	display: inline-block;
+}
+
+
+.Question {
+	margin-top: 3%;
+	margin-left: 20%;
+	width: 60%;
+	padding: 18px;
+	font-size: 1.4em;
+	line-height: 20px;
+	background-color: #E6E6E6;
+	border: 3px solid #cccccc;
+    border-radius: 4px;
+    text-align: center; 
+}
+
+/* .form-control{
+	width: 60%;
+	margin-left: 20%;
+} */
+
+.form-group{
+	width: 100%;
+	padding: 2%;
+}
+
+.allQuestions{
+    margin-top: 10%;
+}

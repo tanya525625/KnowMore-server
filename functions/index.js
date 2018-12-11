@@ -102,6 +102,13 @@ server.get('/main.css', function(req, res, next){
     return next();
 }); 
 
+server.get('/questionsStyle.css', function(req, res, next){ 
+    res.writeHead(200, {"Content-Type":"text/css"});
+    file = fs.createReadStream('questionsStyle.css');
+    file.pipe(res);
+    return next();
+}); 
+
 server.get('/getProfile.js', function(req, res, next){ 
     res.writeHead(200, {"Content-Type":"text/js"});
     file = fs.createReadStream('getProfile.js');

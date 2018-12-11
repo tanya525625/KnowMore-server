@@ -15,7 +15,7 @@ function ShowQuestions(questions){
     //window.alert("We are here!!!");
     //window.alert(questions[1].question);
     for (var i=0; i<questions.length; i++) {
-        var list = '<p>'+ questions[i].question + '</p>';
+        var list = '<div class = "Question">'+ questions[i].question + '</div>';
         document.getElementById('questionField').innerHTML += list;
     }
 }
