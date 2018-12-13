@@ -75,7 +75,6 @@ body{
 
 .surname, 
 .name{
-    /* margin-left: 10%; */
     display: inline-block;
     font-size: 1.2em;
     color:#ffffff;

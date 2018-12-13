@@ -20,7 +20,7 @@ function SendQuest()
     var quest = document.getElementById("quest_field").value.toString();
     var countPos = 0;
     var countNeg = 0;
-    var isModerated = 0;
+    var isModerated = 1;
     var subject = 1;
     var questJSON = {
         question: quest,

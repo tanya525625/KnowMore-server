@@ -17,10 +17,6 @@ con.connect(function (err) {
 const express = require('express');
 const server = express();
 
-// const restify = require('restify'); 
-// const server = restify.createServer(); 
-
-
 server.use(
     function crossOrigin(req, res, next){
         res.header("Access-Cintrol-Allow-Origin","*");

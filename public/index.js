@@ -48,7 +48,7 @@ function login(){
   }
 }
 
-document.emailId = "Zubakhina";
+//document.emailId = "Zubakhina";
 
 // function test(){
 //   return emailId;
